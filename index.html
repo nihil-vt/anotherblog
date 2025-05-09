@@ -2,30 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Embed Example</title>
+    <title>LIVE NIHIL REACTION</title>
     <style>
+        /* Mocha Catppuccin-inspired theme */
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e2e; /* Base */
+            color: #cdd6f4; /* Text */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
+
+        h1 {
+            color: #f5e0dc; /* Rosewater */
+            margin-bottom: 20px;
+        }
+
         .embed-container {
-            margin-top: 20px;
+            background-color: #313244; /* Surface 0 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px; /* Max width of container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        iframe {
+            border: none;
+            width: 100%; /* Full width */
+            height: 500px; /* Set fixed height */
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        /* Make the content more responsive */
+        @media (max-width: 600px) {
+            iframe {
+                height: 500px; /* Smaller height for mobile */
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>My Embedded Content</h1>
+    <h1>LIVE NIHIL REACTION</h1>
 
     <div class="embed-container">
         <!-- Insert your embed code below -->
-        <iframe src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?maxHeight=700" 
-            data-misskey-embed-id="v1_c48b379e-5614-4cef-8ea9-09bfb350d8d9" 
-            loading="lazy" 
-            referrerpolicy="strict-origin-when-cross-origin"></iframe>
-
+        <iframe src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?maxHeight=1000" 
+                data-misskey-embed-id="v1_1f25c95b-2cd6-4824-bb8f-6c4e48edada2" 
+                loading="lazy" 
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <script defer src="https://loli.rodeo/embed.js"></script>
     </div>
 
 </body>
