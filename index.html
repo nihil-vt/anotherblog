@@ -30,7 +30,8 @@
             padding: 0 10px;
             line-height: 1.3;
             position: relative;
-            z-index: 2;
+            z-index: 3;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .embed-container {
@@ -46,7 +47,7 @@
             flex-direction: column;
             box-sizing: border-box;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         iframe {
@@ -59,13 +60,86 @@
             box-sizing: border-box;
         }
 
+/* Improved Fog effect - Smoother and Animated */
+ .fog-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%; /* Increased height for thicker fog */
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(to top, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 60%, transparent 100%); /* Adjusted mask for higher reach */
+  -webkit-mask-image: linear-gradient(to top, black 0%, rgb(0, 0, 0) 30%, transparent 100%);
+ }
+
+ .fog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 300%; /* Increased width for smoother animation loop */
+  height: 100%;
+  background: linear-gradient(
+   to top,
+   rgba(43, 43, 92, 0.98) 0%, /* Increased opacity */
+   rgba(30, 30, 112, 0.9) 40%,  /* Increased opacity and adjusted stop */
+   rgba(17, 17, 97, 0.7) 70%,  /* Increased opacity and adjusted stop */
+   transparent 100%
+  );
+  animation: fog-slide 100s linear infinite; /* Simple sliding animation */
+ }
+
+ .fog-layer {
+  position: absolute;
+  bottom: -20%; /* Start slightly below the container to hide edges */
+  left: -50%;
+  width: 200%;
+  height: 120%; /* Slightly larger to ensure full coverage during animation */
+  background-image:
+   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><filter id="noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="0.8"/><feFuncG type="linear" slope="0.8"/><feFuncB type="linear" slope="0.8"/><feFuncA type="identity"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#noise)" fill="rgba(200, 220, 255, 0.1)"/></svg>'), /* Noise texture */
+   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450"><filter id="noise2" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="0.7"/><feFuncG type="linear" slope="0.7"/><feFuncB type="linear" slope="0.7"/><feFuncA type="identity"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#noise2)" fill="rgba(180, 200, 255, 0.08)"/></svg>'), /* Another noise texture */
+   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="700" height="525" viewBox="0 0 700 525"><filter id="noise3" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="0.6"/><feFuncG type="linear" slope="0.6"/><feFuncB type="linear" slope="0.6"/><feFuncA type="identity"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#noise3)" fill="rgba(220, 230, 255, 0.06)"/></svg>'); /* Yet another noise texture */
+  background-size: cover; /* Cover the entire layer */
+  background-repeat: repeat;
+  animation: fog-drift 120s linear infinite, fog-blur 120s linear infinite alternate; /* Combined drift and subtle blur animation */
+  opacity: 0.7; /* Adjust overall opacity */
+ }
+
+ .fog-layer-1 {
+  animation-duration: 150s;
+  opacity: 0.45;
+ }
+
+ .fog-layer-2 {
+  animation-duration: 180s;
+  animation-direction: reverse, alternate-reverse;
+  opacity: 0.4;
+ }
+
+ @keyframes fog-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-200%); } /* Move across the extended width */
+ }
+
+ @keyframes fog-drift {
+  0% { transform: translate(-20%, 5%); }
+  50% { transform: translate(20%, -5%); }
+  100% { transform: translate(-20%, 5%); }
+ }
+
+ @keyframes fog-blur {
+  0% { filter: blur(2px); }
+  100% { filter: blur(4px); }
+ }
         /* Bouncing Kenny GIF */
         .bouncing-kenny {
             position: fixed;
             pointer-events: none;
-            z-index: 0;
+            z-index: 0; /* Ensure Kenny is behind the fog container if fog is very high */
             transition: transform 0.1s linear;
             image-rendering: crisp-edges;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         /* Audio controls */
@@ -86,6 +160,7 @@
             cursor: pointer;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
         }
 
         .audio-control:hover {
@@ -107,12 +182,12 @@
                 padding: 15px;
                 min-height: calc(100vh - env(safe-area-inset-bottom));
             }
-            
+
             .embed-container {
                 padding: 12px;
                 border-radius: 10px;
             }
-            
+
             h1 {
                 margin-bottom: 15px;
             }
@@ -123,40 +198,48 @@
                 bottom: 15px;
                 right: 15px;
             }
+
+            .fog-container {
+                height: 60%; /* Adjusted for mobile */
+            }
         }
 
         @media (max-width: 400px) {
             iframe {
                 min-height: 350px;
             }
+            .fog-container {
+                height: 55%; /* Further adjusted for smaller mobile */
+            }
         }
     </style>
-    <!-- Font Awesome for volume icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
     <h1>LIVE NIHIL REACTION</h1>
 
-    <div class="embed-container">
-        <!-- Insert your embed code below -->
-<iframe src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?maxHeight=500" 
-        data-misskey-embed-id="v1_ce1e9817-f80b-4421-aa3b-a1b0213bf7fd" 
-        loading="lazy" 
-        referrerpolicy="strict-origin-when-cross-origin" 
-    style="border: none; width: 100%; max-width: 500px; height: 300px; color-scheme: light dark;"></iframe>
-<script defer src="https://loli.rodeo/embed.js"></script>
-        
+    <div class="fog-container">
+        <div class="fog"></div>
+        <div class="fog-layer fog-layer-1"></div>
+        <div class="fog-layer fog-layer-2"></div>
     </div>
 
-    <!-- Audio element (hidden) -->
+    <div class="embed-container">
+        <iframe src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?maxHeight=500"
+        data-misskey-embed-id="v1_ce1e9817-f80b-4421-aa3b-a1b0213bf7fd"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+    style="border: none; width: 100%; max-width: 500px; height: 300px; color-scheme: light dark;"></iframe>
+<script defer src="https://loli.rodeo/embed.js"></script>
+
+    </div>
+
     <audio id="bgMusic" loop>
-        <!-- Replace with your preferred audio file -->
-        <source src="https://loli.rodeo/files/24ba7178-b683-467c-90ae-5c3058b0cc33" type="audio/mpeg">
+        <source src="https://loli.rodeo/files/22c779cc-2982-4898-94ee-38f593ffe7d6" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Audio control button -->
     <button class="audio-control" id="audioControl" title="Toggle sound">
         <i class="fas fa-volume-up"></i>
     </button>
@@ -167,13 +250,13 @@
             const bgMusic = document.getElementById('bgMusic');
             const audioControl = document.getElementById('audioControl');
             const volumeIcon = audioControl.querySelector('i');
-            
+
             // Set initial volume low (20%)
             bgMusic.volume = 0.2;
-            
+
             // Try to autoplay (may be blocked by browser)
             const playPromise = bgMusic.play();
-            
+
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
                     // Autoplay was prevented, show muted state
@@ -182,7 +265,7 @@
                     volumeIcon.classList.add('fa-volume-mute');
                 });
             }
-            
+
             // Toggle mute/unmute
             audioControl.addEventListener('click', function() {
                 bgMusic.muted = !bgMusic.muted;
@@ -198,7 +281,7 @@
                     }
                 }
             });
-            
+
             // Volume control on scroll (when mouse is over button)
             audioControl.addEventListener('wheel', function(e) {
                 e.preventDefault();
@@ -214,34 +297,34 @@
             // Kenny bouncing setup
             const kennyCount = 10;
             const kennys = [];
-            
+
             // Create multiple Kenny instances
             for (let i = 0; i < kennyCount; i++) {
                 const kenny = document.createElement('img');
                 kenny.src = 'https://media.tenor.com/D1x0MXiqQ-4AAAAi/playing-games-kenny-mccormick.gif';
                 kenny.className = 'bouncing-kenny';
                 kenny.alt = 'Bouncing Kenny';
-                
+
                 // Random initial size (60px to 120px)
                 const size = 60 + Math.random() * 60;
                 kenny.style.width = `${size}px`;
                 kenny.style.height = `${size}px`;
-                
+
                 // Random initial position
                 const posX = Math.random() * (window.innerWidth - size);
                 const posY = Math.random() * (window.innerHeight - size);
-                
+
                 // Random initial velocity
                 let speedX = (Math.random() - 0.5) * 8;
                 let speedY = (Math.random() - 0.5) * 8;
-                
+
                 // Slight rotation for variety
                 let rotation = (Math.random() - 0.5) * 20;
                 let rotationSpeed = (Math.random() - 0.5) * 2;
-                
+
                 // Add to DOM
                 document.body.appendChild(kenny);
-                
+
                 // Store Kenny data
                 kennys.push({
                     element: kenny,
@@ -254,50 +337,50 @@
                     rotationSpeed: rotationSpeed
                 });
             }
-            
+
             function animate() {
                 const maxSpeed = 15;
-                
+
                 kennys.forEach(kenny => {
                     // Update position
                     kenny.posX += kenny.speedX;
                     kenny.posY += kenny.speedY;
-                    
+
                     // Bounce off walls
                     if (kenny.posX <= 0 || kenny.posX >= window.innerWidth - kenny.size) {
                         kenny.speedX *= -1;
                         kenny.speedY += (Math.random() - 0.5) * 1.5;
                     }
-                    
+
                     if (kenny.posY <= 0 || kenny.posY >= window.innerHeight - kenny.size) {
                         kenny.speedY *= -1;
                         kenny.speedX += (Math.random() - 0.5) * 1.5;
                     }
-                    
+
                     // Random speed changes occasionally
                     if (Math.random() < 0.01) {
                         kenny.speedX += (Math.random() - 0.5) * 1.5;
                         kenny.speedY += (Math.random() - 0.5) * 1.5;
                     }
-                    
+
                     // Limit maximum speed
                     kenny.speedX = Math.max(-maxSpeed, Math.min(maxSpeed, kenny.speedX));
                     kenny.speedY = Math.max(-maxSpeed, Math.min(maxSpeed, kenny.speedY));
-                    
+
                     // Update rotation
                     kenny.rotation += kenny.rotationSpeed;
-                    
+
                     // Apply position and rotation
                     kenny.element.style.left = `${kenny.posX}px`;
                     kenny.element.style.top = `${kenny.posY}px`;
                     kenny.element.style.transform = `rotate(${kenny.rotation}deg)`;
                 });
-                
+
                 requestAnimationFrame(animate);
             }
-            
+
             animate();
-            
+
             // Handle window resize
             window.addEventListener('resize', function() {
                 kennys.forEach(kenny => {
