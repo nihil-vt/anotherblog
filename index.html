@@ -18,6 +18,8 @@
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden;
         }
 
         h1 {
@@ -27,6 +29,8 @@
             text-align: center;
             padding: 0 10px;
             line-height: 1.3;
+            position: relative;
+            z-index: 2;
         }
 
         .embed-container {
@@ -41,6 +45,8 @@
             align-items: center;
             flex-direction: column;
             box-sizing: border-box;
+            position: relative;
+            z-index: 1;
         }
 
         iframe {
@@ -51,6 +57,48 @@
             max-height: 600px; /* Maximum height */
             border-radius: 8px;
             box-sizing: border-box;
+        }
+
+        /* Bouncing Kenny GIF */
+        .bouncing-kenny {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            transition: transform 0.1s linear;
+            image-rendering: crisp-edges;
+        }
+
+        /* Audio controls */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: #585b70; /* Surface1 */
+            color: #cdd6f4; /* Text */
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .audio-control:hover {
+            background-color: #6c7086; /* Surface2 */
+            transform: scale(1.1);
+        }
+
+        .audio-control:active {
+            transform: scale(0.95);
+        }
+
+        .audio-control i {
+            font-size: 24px;
         }
 
         /* Improved mobile responsiveness */
@@ -68,6 +116,13 @@
             h1 {
                 margin-bottom: 15px;
             }
+
+            .audio-control {
+                width: 40px;
+                height: 40px;
+                bottom: 15px;
+                right: 15px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -76,6 +131,8 @@
             }
         }
     </style>
+    <!-- Font Awesome for volume icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -91,6 +148,165 @@
 <script defer src="https://loli.rodeo/embed.js"></script>
         
     </div>
+
+    <!-- Audio element (hidden) -->
+    <audio id="bgMusic" loop>
+        <!-- Replace with your preferred audio file -->
+        <source src="https://loli.rodeo/files/24ba7178-b683-467c-90ae-5c3058b0cc33" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Audio control button -->
+    <button class="audio-control" id="audioControl" title="Toggle sound">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Audio setup
+            const bgMusic = document.getElementById('bgMusic');
+            const audioControl = document.getElementById('audioControl');
+            const volumeIcon = audioControl.querySelector('i');
+            
+            // Set initial volume low (20%)
+            bgMusic.volume = 0.2;
+            
+            // Try to autoplay (may be blocked by browser)
+            const playPromise = bgMusic.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // Autoplay was prevented, show muted state
+                    bgMusic.muted = true;
+                    volumeIcon.classList.remove('fa-volume-up');
+                    volumeIcon.classList.add('fa-volume-mute');
+                });
+            }
+            
+            // Toggle mute/unmute
+            audioControl.addEventListener('click', function() {
+                bgMusic.muted = !bgMusic.muted;
+                if (bgMusic.muted) {
+                    volumeIcon.classList.remove('fa-volume-up');
+                    volumeIcon.classList.add('fa-volume-mute');
+                } else {
+                    volumeIcon.classList.remove('fa-volume-mute');
+                    volumeIcon.classList.add('fa-volume-up');
+                    // If audio was blocked before, try to play again when user interacts
+                    if (bgMusic.paused) {
+                        bgMusic.play();
+                    }
+                }
+            });
+            
+            // Volume control on scroll (when mouse is over button)
+            audioControl.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                if (e.deltaY < 0) {
+                    // Scroll up - increase volume
+                    bgMusic.volume = Math.min(1, bgMusic.volume + 0.1);
+                } else {
+                    // Scroll down - decrease volume
+                    bgMusic.volume = Math.max(0, bgMusic.volume - 0.1);
+                }
+            }, { passive: false });
+
+            // Kenny bouncing setup
+            const kennyCount = 10;
+            const kennys = [];
+            
+            // Create multiple Kenny instances
+            for (let i = 0; i < kennyCount; i++) {
+                const kenny = document.createElement('img');
+                kenny.src = 'https://media.tenor.com/D1x0MXiqQ-4AAAAi/playing-games-kenny-mccormick.gif';
+                kenny.className = 'bouncing-kenny';
+                kenny.alt = 'Bouncing Kenny';
+                
+                // Random initial size (60px to 120px)
+                const size = 60 + Math.random() * 60;
+                kenny.style.width = `${size}px`;
+                kenny.style.height = `${size}px`;
+                
+                // Random initial position
+                const posX = Math.random() * (window.innerWidth - size);
+                const posY = Math.random() * (window.innerHeight - size);
+                
+                // Random initial velocity
+                let speedX = (Math.random() - 0.5) * 8;
+                let speedY = (Math.random() - 0.5) * 8;
+                
+                // Slight rotation for variety
+                let rotation = (Math.random() - 0.5) * 20;
+                let rotationSpeed = (Math.random() - 0.5) * 2;
+                
+                // Add to DOM
+                document.body.appendChild(kenny);
+                
+                // Store Kenny data
+                kennys.push({
+                    element: kenny,
+                    size: size,
+                    posX: posX,
+                    posY: posY,
+                    speedX: speedX,
+                    speedY: speedY,
+                    rotation: rotation,
+                    rotationSpeed: rotationSpeed
+                });
+            }
+            
+            function animate() {
+                const maxSpeed = 15;
+                
+                kennys.forEach(kenny => {
+                    // Update position
+                    kenny.posX += kenny.speedX;
+                    kenny.posY += kenny.speedY;
+                    
+                    // Bounce off walls
+                    if (kenny.posX <= 0 || kenny.posX >= window.innerWidth - kenny.size) {
+                        kenny.speedX *= -1;
+                        kenny.speedY += (Math.random() - 0.5) * 1.5;
+                    }
+                    
+                    if (kenny.posY <= 0 || kenny.posY >= window.innerHeight - kenny.size) {
+                        kenny.speedY *= -1;
+                        kenny.speedX += (Math.random() - 0.5) * 1.5;
+                    }
+                    
+                    // Random speed changes occasionally
+                    if (Math.random() < 0.01) {
+                        kenny.speedX += (Math.random() - 0.5) * 1.5;
+                        kenny.speedY += (Math.random() - 0.5) * 1.5;
+                    }
+                    
+                    // Limit maximum speed
+                    kenny.speedX = Math.max(-maxSpeed, Math.min(maxSpeed, kenny.speedX));
+                    kenny.speedY = Math.max(-maxSpeed, Math.min(maxSpeed, kenny.speedY));
+                    
+                    // Update rotation
+                    kenny.rotation += kenny.rotationSpeed;
+                    
+                    // Apply position and rotation
+                    kenny.element.style.left = `${kenny.posX}px`;
+                    kenny.element.style.top = `${kenny.posY}px`;
+                    kenny.element.style.transform = `rotate(${kenny.rotation}deg)`;
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                kennys.forEach(kenny => {
+                    kenny.posX = Math.min(kenny.posX, window.innerWidth - kenny.size);
+                    kenny.posY = Math.min(kenny.posY, window.innerHeight - kenny.size);
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
