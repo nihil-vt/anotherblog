@@ -3,302 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIVE NIHIL REACTION</title>
+    <title>fentville</title>
     <style>
-        /* Mocha Catppuccin-inspired theme */
+        /* === Windows 98 Inspired Styles === */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #202020;
+            background-image: url('https://i.imgur.com/YOURBACKGROUND.jpg');
+            background-attachment: fixed;
+            font-family: "MS Sans Serif", "Comic Sans MS", sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #1e1e2e; /* Base */
-            color: #cdd6f4; /* Text */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        h1 {
-            color: #f5e0dc; /* Rosewater */
-            margin: 0 0 20px 0;
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            color: #000;
             text-align: center;
-            padding: 0 10px;
-            line-height: 1.3;
-            position: relative;
-            z-index: 3;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-
-        .embed-container {
-            background-color: #313244; /* Surface 0 */
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 500px; /* Max width of container */
+        
+        /* === Windows 98 Window Styles === */
+        .win98-window {
+            background: #c0c0c0;
+            border: 3px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            padding: 3px;
+            margin: 10px auto;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            text-align: left;
+        }
+        
+        .win98-titlebar {
+            background: linear-gradient(to right, #000080, #1084d0);
+            color: white;
+            padding: 3px 5px;
+            font-weight: bold;
+            font-size: 13px;
+            margin: -3px -3px 5px -3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .win98-buttons {
+            display: flex;
+        }
+        
+        .win98-button {
+            width: 16px;
+            height: 14px;
+            margin-left: 2px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            font-size: 9px;
+            text-align: center;
+            line-height: 12px;
+        }
+        
+        .win98-content {
+            background: white;
+            padding: 10px;
+            border: 1px solid #808080;
+        }
+        
+        /* === MySpace 2010 Layout === */
+        .myspace-container {
+            width: 980px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            gap: 15px;
+        }
+        
+        /* === Media Player Styles === */
+        .media-player {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border: 3px solid #333;
+            font-family: "Courier New", monospace;
+            margin: 15px 0;
+        }
+        
+        .media-player.light-theme {
+            background: #f0f0f0;
+            color: #333;
+            border: 3px solid #ccc;
+            font-family: "Courier New", monospace;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        
+        .player-controls {
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 2;
+            gap: 10px;
+            margin: 10px 0;
         }
-
-        iframe {
-            border: none;
-            width: 100%; /* Full width */
-            height: 70vh; /* Responsive height based on viewport */
-            min-height: 400px; /* Minimum height */
-            max-height: 600px; /* Maximum height */
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-/* Improved Fog effect - Smoother and Animated */
- .fog-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30%; /* Increased height for thicker fog */
-  z-index: 1;
-  overflow: hidden;
-  pointer-events: none;
-  mask-image: linear-gradient(to top, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 60%, transparent 100%); /* Adjusted mask for higher reach */
-  -webkit-mask-image: linear-gradient(to top, black 0%, rgb(0, 0, 0) 30%, transparent 100%);
- }
-
- .fog {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 300%; /* Increased width for smoother animation loop */
-  height: 100%;
-  background: linear-gradient(
-   to top,
-   rgba(43, 43, 92, 0.98) 0%, /* Increased opacity */
-   rgba(30, 30, 112, 0.9) 40%,  /* Increased opacity and adjusted stop */
-   rgba(17, 17, 97, 0.7) 70%,  /* Increased opacity and adjusted stop */
-   transparent 100%
-  );
-  animation: fog-slide 100s linear infinite; /* Simple sliding animation */
- }
-
- .fog-layer {
-  position: absolute;
-  bottom: -20%; /* Start slightly below the container to hide edges */
-  left: -50%;
-  width: 200%;
-  height: 120%; /* Slightly larger to ensure full coverage during animation */
-  background-image:
-   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><filter id="noise" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="0.8"/><feFuncG type="linear" slope="0.8"/><feFuncB type="linear" slope="0.8"/><feFuncA type="identity"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#noise)" fill="rgba(200, 220, 255, 0.1)"/></svg>'), /* Noise texture */
-   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450"><filter id="noise2" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="0.7"/><feFuncG type="linear" slope="0.7"/><feFuncB type="linear" slope="0.7"/><feFuncA type="identity"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#noise2)" fill="rgba(180, 200, 255, 0.08)"/></svg>'), /* Another noise texture */
-   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="700" height="525" viewBox="0 0 700 525"><filter id="noise3" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="0.6"/><feFuncG type="linear" slope="0.6"/><feFuncB type="linear" slope="0.6"/><feFuncA type="identity"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#noise3)" fill="rgba(220, 230, 255, 0.06)"/></svg>'); /* Yet another noise texture */
-  background-size: cover; /* Cover the entire layer */
-  background-repeat: repeat;
-  animation: fog-drift 120s linear infinite, fog-blur 120s linear infinite alternate; /* Combined drift and subtle blur animation */
-  opacity: 0.7; /* Adjust overall opacity */
- }
-
- .fog-layer-1 {
-  animation-duration: 150s;
-  opacity: 0.45;
- }
-
- .fog-layer-2 {
-  animation-duration: 180s;
-  animation-direction: reverse, alternate-reverse;
-  opacity: 0.4;
- }
-
- @keyframes fog-slide {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-200%); } /* Move across the extended width */
- }
-
- @keyframes fog-drift {
-  0% { transform: translate(-20%, 5%); }
-  50% { transform: translate(20%, -5%); }
-  100% { transform: translate(-20%, 5%); }
- }
-
- @keyframes fog-blur {
-  0% { filter: blur(2px); }
-  100% { filter: blur(4px); }
- }
-        /* Bouncing Kenny GIF */
-        .bouncing-kenny {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0; /* Ensure Kenny is behind the fog container if fog is very high */
-            transition: transform 0.1s linear;
-            image-rendering: crisp-edges;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-
-        /* Audio controls */
-        .audio-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background-color: #585b70; /* Surface1 */
-            color: #cdd6f4; /* Text */
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .player-button {
+            background: #333;
+            color: #0f0;
+            border: 2px solid #0f0;
+            padding: 5px 10px;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.2s ease;
-            backdrop-filter: blur(5px);
         }
-
-        .audio-control:hover {
-            background-color: #6c7086; /* Surface2 */
-            transform: scale(1.1);
+        
+        .media-player.light-theme .player-button {
+            background: #fff;
+            color: #333;
+            border: 2px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
         }
-
-        .audio-control:active {
-            transform: scale(0.95);
+        
+        .playlist {
+            height: 100px;
+            overflow-y: auto;
+            background: #000;
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid #0f0;
         }
-
-        .audio-control i {
-            font-size: 24px;
+        
+        /* === Custom Background Section === */
+        .background-selector {
+            background: #c0c0c0;
+            padding: 10px;
+            border: 3px solid;
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
         }
-
-        /* Improved mobile responsiveness */
-        @media (max-width: 600px) {
-            body {
-                padding: 15px;
-                min-height: calc(100vh - env(safe-area-inset-bottom));
+        
+        .bg-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin: 10px 0;
+        }
+        
+        .bg-option {
+            height: 60px;
+            background-size: cover;
+            cursor: pointer;
+            border: 2px solid #808080;
+        }
+        
+        /* === Retro Elements === */
+        .marquee {
+            background: #000;
+            color: #0f0;
+            padding: 5px;
+            margin: 10px 0;
+            font-family: "Courier New", monospace;
+        }
+        
+        .pixel-font {
+            font-family: "Press Start 2P", cursive;
+            font-size: 10px;
+        }
+        
+        .glitter {
+            background-image: linear-gradient(45deg, #ff0000, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+            background-size: 400% 400%;
+            color: transparent; /* Make the text transparent to show the gradient */
+            -webkit-background-clip: text;
+            background-clip: text;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Add shadow for better contrast */
+            animation: sparkle 3s linear infinite; /* Add sparkle animation */
+        }
+        
+        /* Sparkle Animation */
+        @keyframes sparkle {
+            0% {
+                background-position: 0% 50%;
             }
-
-            .embed-container {
-                padding: 12px;
-                border-radius: 10px;
+            50% {
+                background-position: 100% 50%;
             }
-
-            h1 {
-                margin-bottom: 15px;
-            }
-
-            .audio-control {
-                width: 40px;
-                height: 40px;
-                bottom: 15px;
-                right: 15px;
-            }
-
-            .fog-container {
-                height: 60%; /* Adjusted for mobile */
+            100% {
+                background-position: 0% 50%;
             }
         }
-
-        @media (max-width: 400px) {
-            iframe {
-                min-height: 350px;
-            }
-            .fog-container {
-                height: 55%; /* Further adjusted for smaller mobile */
-            }
+        
+        /* === Scrollbars === */
+        ::-webkit-scrollbar {
+            width: 16px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #c0c0c0;
+            border: 3px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #808080;
+            border: 3px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Windows 98 Desktop Background Pattern -->
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://web.archive.org/web/20121121030242im_/http://www.myspace.com/img/wallpapers/pattern_1.jpg'); opacity: 0.2; pointer-events: none; z-index: -1;"></div>
 
-    <h1>LIVE NIHIL REACTION</h1>
+    <!-- Main Container -->
+    <div class="myspace-container">
+        <!-- Left Column -->
+        <div>
+            <!-- Profile Window -->
+            <div class="win98-window">
+                <div class="win98-titlebar">
+                    <span>Profile</span>
+                    <div class="win98-buttons">
+                        <div class="win98-button">_</div>
+                        <div class="win98-button">□</div>
+                        <div class="win98-button">X</div>
+                    </div>
+                </div>
+                <div class="win98-content">
+                    <center>
+                        <img src="https://cdn.loli.rodeo/bzJpLTR99D.png?key=gdKwkM3R9AxYf4" width="150" style="border: 3px solid #000080;">
+                        <h3 class="glitter">NIHIL</h3>
+                        <p>"The all-consuming Patriarch of Oblivion!"</p>
+                        <div class="pixel-font">LVL 2147483647</div>
+                        <img src="https://cdn.loli.rodeo/2JFJ7xpJxz.gif?key=9Y8qyXG5sP7pSC" width="150">
+                    </center>
+                </div>
+            </div>
+            
+            <!-- Music Player Window -->
+            <div class="win98-window">
+                <div class="win98-titlebar">
+                    <span>Media Player</span>
+                    <div class="win98-buttons">
+                        <div class="win98-button">_</div>
+                        <div class="win98-button">□</div>
+                        <div class="win98-button">X</div>
+                    </div>
+                </div>
+                <div class="win98-content">
+                    <div class="media-player light-theme">
+                        <div>Now Playing:</div>
+                        <div id="now-playing">Gangsta's Paradise - Mona Megistus</div>
+                        <div class="player-controls">
+                            <button class="player-button">⏵</button> <!-- Play icon -->
+                        </div>
+                        <label for="timeline" style="display: block; margin-top: 10px;">Seek:</label>
+                        <input id="timeline" type="range" min="0" max="100" value="0" step="1" style="width: 100%; margin: 5px 0;">
+                        <label for="volume-bar" style="display: block; margin-top: 10px;">Volume:</label>
+                        <input id="volume-bar" type="range" min="0" max="100" value="20" step="1" style="width: 70%; margin: 5px 0;"> <!-- 30% smaller -->
+                        <audio id="player" src="https://fuck.your-homi.es/96mvMwE8Vo.mp3?key=K6SEeI7dM0w6li" autoplay loop></audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Middle Column -->
+        <div>
+            <!-- Status Window -->
+            <div class="win98-window">
+                <div class="win98-titlebar">
+                    <span>Status Updates</span>
+                    <div class="win98-buttons">
+                        <div class="win98-button">_</div>
+                        <div class="win98-button">□</div>
+                        <div class="win98-button">X</div>
+                    </div>
+                </div>
+                <div class="win98-content">
+                    <iframe src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?header=false&maxHeight=500" data-misskey-embed-id="v1_a1cfb05c-6255-4bdf-90f0-0c211e53e585" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="border: none; width: 100%; height: 300px; color-scheme: light dark;"></iframe>
+                    <script defer src="https://loli.rodeo/embed.js"></script>
+                </div>
+            </div>
 
-    <div class="fog-container">
-        <div class="fog"></div>
-        <div class="fog-layer fog-layer-1"></div>
-        <div class="fog-layer fog-layer-2"></div>
+            <!-- Marquee Window -->
+            <div class="win98-window">
+                <div class="win98-titlebar">
+                    <span>Current Mood</span>
+                    <div class="win98-buttons">
+                        <div class="win98-button">_</div>
+                        <div class="win98-button">□</div>
+                        <div class="win98-button">X</div>
+                    </div>
+                </div>
+                <div class="win98-content">
+                    <div class="marquee">
+                        <marquee behavior="scroll" direction="left">~*~ Currently feeling: Pogpilled ~*~ Watching: Neon Genesis Evangelion ~*~</marquee>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div class="right-column">
+            <!-- GIF Showcase Window -->
+            <div class="win98-window">
+                <div class="win98-titlebar">
+                    <span>Webcam</span>
+                    <div class="win98-buttons">
+                        <div class="win98-button">_</div>
+                        <div class="win98-button">□</div>
+                        <div class="win98-button">X</div>
+                    </div>
+                </div>
+                <div class="win98-content">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <img src="https://media1.tenor.com/m/wasxrCLXbxQAAAAd/ew-eww.gif" width="340%" style="border: 2px solid #000080;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comments Window -->
+            <div class="win98-window">
+                <div class="win98-titlebar">
+                    <span>Comments (3)</span>
+                    <div class="win98-buttons">
+                        <div class="win98-button">_</div>
+                        <div class="win98-button">□</div>
+                        <div class="win98-button">X</div>
+                    </div>
+                </div>
+                <div class="win98-content">
+                    <div style="height: 200px; overflow-y: auto; padding: 5px; background: #fff; border: 1px solid #808080;">
+                        <div style="margin-bottom: 10px;">
+                            <strong>Tom:</strong> CHICKEN JOCKEY!<br>
+                            <small>2 hours ago</small>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>Sarah:</strong> anime pfp lol<br>
+                            <small>Yesterday</small>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>Mike:</strong> kys!<br>
+                            <small>3 days ago</small>
+                        </div>
+                    </div>
+                    <textarea style="width: 100%; height: 60px; margin-top: 10px;" placeholder="Leave a comment..."></textarea>
+                    <button style="width: 100%; padding: 5px; margin-top: 5px;">Post Comment</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="embed-container">
-        <iframe src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?maxHeight=500"
-        data-misskey-embed-id="v1_ce1e9817-f80b-4421-aa3b-a1b0213bf7fd"
-        loading="lazy"
-        referrerpolicy="strict-origin-when-cross-origin"
-    style="border: none; width: 100%; max-width: 500px; height: 300px; color-scheme: light dark;"></iframe>
-<script defer src="https://loli.rodeo/embed.js"></script>
-
+    <!-- Footer -->
+    <div style="margin: 20px auto; width: 980px; text-align: center; font-size: 11px; color: #fff; text-shadow: 1px 1px 1px #000;">
+        <p>© 2002 Jimbo's Crackshack | 
+        <a href="#" style="color: #fff;">Home</a> | 
+        <a href="#" style="color: #fff;">Profile</a> | 
+        <a href="#" style="color: #fff;">Friends</a> | 
+        <a href="#" style="color: #fff;">Inbox</a></p>
+        <p>Profile last updated: <span id="last-updated">3/17/2005</span></p>
     </div>
-
-    <audio id="bgMusic" loop>
-        <source src="https://loli.rodeo/files/22c779cc-2982-4898-94ee-38f593ffe7d6" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <button class="audio-control" id="audioControl" title="Toggle sound">
-        <i class="fas fa-volume-up"></i>
-    </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Audio setup
-            const bgMusic = document.getElementById('bgMusic');
-            const audioControl = document.getElementById('audioControl');
-            const volumeIcon = audioControl.querySelector('i');
+        const player = document.getElementById('player');
+        const playButton = document.querySelector('.player-button');
+        const timeline = document.getElementById('timeline');
+        const volumeBar = document.getElementById('volume-bar');
 
-            // Set initial volume low (20%)
-            bgMusic.volume = 0.2;
+        // Set initial volume to 20%
+        player.volume = 0.2;
 
-            // Try to autoplay (may be blocked by browser)
-            const playPromise = bgMusic.play();
-
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    // Autoplay was prevented, show muted state
-                    bgMusic.muted = true;
-                    volumeIcon.classList.remove('fa-volume-up');
-                    volumeIcon.classList.add('fa-volume-mute');
-                });
+        // Play/Pause functionality
+        playButton.addEventListener('click', () => {
+            if (player.paused) {
+                player.play();
+                playButton.textContent = '⏸'; // Change to pause icon
+            } else {
+                player.pause();
+                playButton.textContent = '⏵'; // Change to play icon
             }
+        });
 
-            // Toggle mute/unmute
-            audioControl.addEventListener('click', function() {
-                bgMusic.muted = !bgMusic.muted;
-                if (bgMusic.muted) {
-                    volumeIcon.classList.remove('fa-volume-up');
-                    volumeIcon.classList.add('fa-volume-mute');
-                } else {
-                    volumeIcon.classList.remove('fa-volume-mute');
-                    volumeIcon.classList.add('fa-volume-up');
-                    // If audio was blocked before, try to play again when user interacts
-                    if (bgMusic.paused) {
-                        bgMusic.play();
-                    }
-                }
-            });
+        // Update the timeline as the audio plays
+        player.addEventListener('timeupdate', () => {
+            const progress = (player.currentTime / player.duration) * 100;
+            timeline.value = progress || 0; // Handle NaN for duration
+        });
 
-            // Volume control on scroll (when mouse is over button)
-            audioControl.addEventListener('wheel', function(e) {
-                e.preventDefault();
-                if (e.deltaY < 0) {
-                    // Scroll up - increase volume
-                    bgMusic.volume = Math.min(1, bgMusic.volume + 0.1);
-                } else {
-                    // Scroll down - decrease volume
-                    bgMusic.volume = Math.max(0, bgMusic.volume - 0.1);
-                }
-            }, { passive: false });
+        // Seek functionality when the timeline is adjusted
+        timeline.addEventListener('input', () => {
+            const seekTime = (timeline.value / 100) * player.duration;
+            player.currentTime = seekTime;
+        });
 
-            // Kenny bouncing setup
+        // Volume control functionality
+        volumeBar.addEventListener('input', () => {
+            player.volume = volumeBar.value / 100; // Update the audio volume
+        });
+
+        // Initialize the player
+        player.play();
+        playButton.textContent = '⏸'; // Set initial button state to pause
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup
             const kennyCount = 10;
             const kennys = [];
 
-            // Create multiple Kenny instances
+            // Create Kenny instances
             for (let i = 0; i < kennyCount; i++) {
                 const kenny = document.createElement('img');
                 kenny.src = 'https://media.tenor.com/D1x0MXiqQ-4AAAAi/playing-games-kenny-mccormick.gif';
@@ -323,6 +425,9 @@
                 let rotationSpeed = (Math.random() - 0.5) * 2;
 
                 // Add to DOM
+                kenny.style.position = 'fixed';
+                kenny.style.zIndex = '-1'; // Ensure it stays behind the windows
+                kenny.style.pointerEvents = 'none'; // Prevent interaction
                 document.body.appendChild(kenny);
 
                 // Store Kenny data
@@ -390,6 +495,5 @@
             });
         });
     </script>
-
 </body>
 </html>
