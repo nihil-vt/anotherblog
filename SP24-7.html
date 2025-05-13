@@ -80,7 +80,7 @@
             <span>Live Stream</span>
         </div>
         <div class="win98-content">
-            <iframe id="player" src="https://vecloud.eu/stream/3b146825-9e54-4e17-b96e-c172ced342ad?autoplay=1" scrolling="no" allowfullscreen allow="encrypted-media; picture-in-picture;"></iframe>
+            <iframe id="player" src="https://vecloud.eu/stream/3b146825-9e54-4e17-b96e-c172ced342ad?autoplay=1&mute=1" scrolling="no" allowfullscreen allow="encrypted-media; picture-in-picture;"></iframe>
         </div>
     </div>
     <p><a href="index.html" class="retro-button">Back</a></p>
@@ -88,6 +88,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const iframe = document.getElementById('player');
             iframe.onload = () => {
+                // Set volume to a capped level (20%)
                 iframe.contentWindow.postMessage({ event: 'command', func: 'setVolume', args: [0.2] }, '*');
             };
         });
