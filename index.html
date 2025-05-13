@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fentville</title>
+    <title>Nihilspace 2.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn.loli.rodeo/bzJpLTR99D.png?key=gdKwkM3R9AxYf4" type="image/png">
     <style>
         /* === Optimized Styles === */
         body {
@@ -314,5 +315,59 @@
             });
         });
     </script>
+    <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Create a single bouncing Kenny
+        const kenny = document.createElement('img');
+        kenny.src = 'https://media.tenor.com/D1x0MXiqQ-4AAAAi/playing-games-kenny-mccormick.gif';
+        kenny.alt = 'Bouncing Kenny';
+        kenny.style.position = 'fixed';
+        kenny.style.zIndex = '1'; // Ensure it is visible above the background
+        kenny.style.pointerEvents = 'none'; // Prevent interaction
+        kenny.style.width = '100px';
+        kenny.style.height = '100px';
+        kenny.style.left = '0px'; // Initialize horizontal position
+        kenny.style.top = '0px'; // Initialize vertical position
+
+        // Initial position and velocity
+        let posX = Math.random() * (window.innerWidth - 100);
+        let posY = Math.random() * (window.innerHeight - 100);
+        let speedX = (Math.random() > 0.5 ? 1 : -1) * 2; // Slower and randomized horizontal speed
+        let speedY = (Math.random() > 0.5 ? 1 : -1) * 2; // Slower and randomized vertical speed
+
+        // Add Kenny to the DOM
+        document.body.appendChild(kenny);
+
+        function animate() {
+            // Update position
+            posX += speedX;
+            posY += speedY;
+
+            // Bounce off walls and randomize direction slightly
+            if (posX <= 0 || posX >= window.innerWidth - 100) {
+                speedX *= -1;
+                speedY += (Math.random() - 0.5) * 0.5; // Add slight randomness to vertical speed
+            }
+            if (posY <= 0 || posY >= window.innerHeight - 100) {
+                speedY *= -1;
+                speedX += (Math.random() - 0.5) * 0.5; // Add slight randomness to horizontal speed
+            }
+
+            // Apply position
+            kenny.style.left = `${posX}px`;
+            kenny.style.top = `${posY}px`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            posX = Math.min(posX, window.innerWidth - 100);
+            posY = Math.min(posY, window.innerHeight - 100);
+        });
+    });
+</script>
 </body>
 </html>
