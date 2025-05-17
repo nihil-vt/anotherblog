@@ -51,9 +51,27 @@
         }
         .win98-content {
             background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px;
+            padding: 5px 10px; /* Reduced vertical padding */
             border: 1px solid #808080;
         }
+
+        .win98-content center {
+            margin: 0; /* Remove extra margin from the <center> tag */
+        }
+
+        .win98-content img, 
+        .win98-content h3, 
+        .win98-content p, 
+        .win98-content .pixel-font {
+            margin: 3px 0; /* Reduce margins for child elements */
+        }
+
+        .pixel-font {
+            font-family: 'Press Start 2P', monospace; /* Ensure the correct font is applied */
+            font-size: 12px; /* Adjust size if needed */
+            line-height: 1.3; /* Optional: Adjust line height for better spacing */
+        }
+
         .myspace-container {
             width: 980px;
             margin: 0 auto;
@@ -138,6 +156,9 @@
                     <center>
                         <img src="https://cdn.loli.rodeo/bzJpLTR99D.png?key=gdKwkM3R9AxYf4" width="150" style="border: 3px solid #000080;">
                         <h3 class="glitter">NIHIL</h3>
+                        <a href="https://loli.rodeo" target="_blank">
+                            <img src="lrbanner.svg" alt="Banner" style="margin: 5px 0; width: 60%;">
+                        </a>
                         <p>"The all-consuming Patriarch of Oblivion!"</p>
                         <div class="pixel-font">LVL 2147483647</div>
                         <img src="https://cdn.loli.rodeo/2JFJ7xpJxz.gif?key=9Y8qyXG5sP7pSC" width="150">
@@ -262,7 +283,7 @@
                             <small>Yesterday</small>
                         </div>
                         <div style="margin-bottom: 10px;">
-                            <strong>Mike:</strong> kys!<br>
+                            <strong>Jess:</strong> uwu<br>
                             <small>3 days ago</small>
                         </div>
                     </div>
