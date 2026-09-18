@@ -3,94 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="24/7 South Park streaming in a Windows 98 window.">
+    <meta name="theme-color" content="#000080">
     <title>24/7 South Park</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --win-face: #c0c0c0;
+            --win-light: #ffffff;
+            --win-dark: #808080;
+            --titlebar-a: #000080;
+            --titlebar-b: #1084d0;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
             background-color: #202020;
-            font-family: "MS Sans Serif", "Comic Sans MS", sans-serif;
+            background-image: radial-gradient(circle at 50% 0%, #303030, #202020 70%);
+            font-family: "JetBrains Mono", "Consolas", monospace;
             margin: 0;
             padding: 20px;
             color: #fff;
             text-align: center;
+            min-height: 100vh;
         }
+
         .win98-window {
-            background: #c0c0c0;
+            background: var(--win-face);
             border: 3px solid;
-            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
             padding: 3px;
-            margin: 10px auto;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            margin: 6vh auto 16px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
             text-align: left;
-            max-width: 960px; /* Increased by 20% */
+            max-width: 960px;
         }
+
         .win98-titlebar {
-            background: linear-gradient(to right, #000080, #1084d0);
-            color: white;
-            padding: 3px 5px;
+            background: linear-gradient(to right, var(--titlebar-a), var(--titlebar-b));
+            color: #fff;
+            padding: 4px 6px;
             font-weight: bold;
             font-size: 13px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
+        .win98-titlebar .win98-buttons { display: flex; gap: 2px; }
+
+        .win98-button {
+            width: 16px;
+            height: 14px;
+            background: var(--win-face);
+            border: 2px solid;
+            border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .win98-button svg { display: block; pointer-events: none; }
+        .win98-button:active {
+            border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+            background: #d6d3ce;
+        }
+
         .win98-content {
-            background: white;
-            padding: 0; /* Removed padding to ensure the video fits perfectly */
+            background: #000;
+            padding: 0;
             color: #000;
             position: relative;
-            height: 540px; /* Increased by 20% */
+            height: 60vh;
+            min-height: 340px;
         }
-        iframe {
+
+        .win98-content iframe {
             width: 100%;
             height: 100%;
             border: none;
             position: absolute;
+            inset: 0;
         }
-        a {
-            color: #0000ff;
-            text-decoration: none;
+
+        .fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #0f0;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 14px;
+            background:
+                radial-gradient(600px 400px at 50% 40%, rgba(0, 80, 0, 0.5), transparent 70%),
+                #000;
         }
-        a:hover {
-            text-decoration: underline;
-        }
+        .fallback .blink { animation: blink 1.2s steps(2) infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+
         .retro-button {
             display: inline-block;
-            background: #c0c0c0;
+            background: var(--win-face);
             border: 2px solid;
-            border-color: #ffffff #808080 #808080 #ffffff;
-            padding: 5px 10px;
-            font-family: "MS Sans Serif", "Comic Sans MS", sans-serif;
+            border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            padding: 6px 14px;
+            font-family: inherit;
             font-size: 12px;
             color: #000;
             text-decoration: none;
             text-align: center;
             cursor: pointer;
-            box-shadow: 1px 1px 0 #808080;
+            box-shadow: 1px 1px 0 var(--win-dark);
         }
-        .retro-button:hover {
-            background: #dfdfdf;
-            border-color: #808080 #ffffff #ffffff #808080;
+        .retro-button:hover { background: #dfdfdf; }
+        .retro-button:active {
+            border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+            box-shadow: inset 1px 1px 0 var(--win-dark);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .win98-content { height: 70vh; }
         }
     </style>
 </head>
 <body>
     <div class="win98-window">
         <div class="win98-titlebar">
-            <span>Live Stream</span>
+            <span>Live Stream - 24/7 South Park</span>
+            <div class="win98-buttons">
+                <button class="win98-button" type="button" title="Minimize"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                <button class="win98-button" type="button" title="Maximize"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                <button class="win98-button" type="button" title="Close"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
+            </div>
         </div>
         <div class="win98-content">
-            <iframe id="player" src="https://veplay.top/stream/3b146825-9e54-4e17-b96e-c172ced342ad?autoplay=1&mute=1" scrolling="no" allowfullscreen allow="encrypted-media; picture-in-picture;"></iframe>
+            <iframe id="player" src="https://ppv.st/live/247-south-park"
+                scrolling="no" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture; fullscreen"></iframe>
+            <div class="fallback" id="fallback" hidden>
+                <div style="font-weight:bold;">SIGNAL LOST</div>
+                <div>the stream is unreachable from your connection</div>
+                <div class="blink">&gt; retrying&hellip;</div>
+            </div>
         </div>
     </div>
     <p><a href="index.html" class="retro-button">Back</a></p>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const iframe = document.getElementById('player');
-            iframe.onload = () => {
-                // Set volume to a capped level (20%)
-                iframe.contentWindow.postMessage({ event: 'command', func: 'setVolume', args: [0.2] }, '*');
-            };
+            const fallback = document.getElementById('fallback');
+
+            let unreachable = false;
+            const timeoutId = setTimeout(() => {
+                unreachable = true;
+                fallback.hidden = false;
+            }, 15000);
+
+            window.addEventListener('message', () => {
+                clearTimeout(timeoutId);
+            });
+
+            iframe.addEventListener('load', () => {
+                clearTimeout(timeoutId);
+            });
         });
     </script>
 </body>

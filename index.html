@@ -3,392 +3,590 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nihilspace 2.0 - the all-consuming Patriarch of Oblivion's personal corner of the web.">
+    <meta name="theme-color" content="#000080">
     <title>Nihilspace 2.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://cdn.loli.rodeo/bzJpLTR99D.png?key=gdKwkM3R9AxYf4" type="image/png">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        /* === Optimized Styles === */
-        body {
-            background: url('https://cdn.loli.rodeo/p1CK8Ls7he.gif?key=Gmi7DOFGXncxsY') no-repeat center center fixed;
-            background-size: cover;
-            font-family: "MS Sans Serif", "Comic Sans MS", sans-serif;
+        :root {
+            --win-face: #c0c0c0;
+            --win-light: #ffffff;
+            --win-dark: #808080;
+            --win-darker: #404040;
+            --titlebar-a: #000080;
+            --titlebar-b: #1084d0;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            background: #000;
             color: #000;
-            text-align: center;
-        }
-        .win98-window {
-            background-color: rgba(192, 192, 192, 0.9);
-            border: 3px solid #dfdfdf;
-            padding: 3px;
-            margin: 10px auto;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-            text-align: left;
-        }
-        .win98-titlebar {
-            background: linear-gradient(to right, #000080, #1084d0);
-            color: white;
-            padding: 3px 5px;
-            font-weight: bold;
+            font-family: "JetBrains Mono", "Consolas", monospace;
             font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .win98-buttons {
-            display: flex;
-        }
-        .win98-button {
-            width: 16px;
-            height: 14px;
-            margin-left: 2px;
-            background: #c0c0c0; /* Correct Windows 98 button background */
-            border: 2px solid;
-            border-color: #ffffff #808080 #808080 #ffffff; /* Correct Windows 98 border colors */
-            font-size: 9px;
-            text-align: center;
-            line-height: 12px;
-        }
-        .win98-content {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 5px 10px; /* Reduced vertical padding */
-            border: 1px solid #808080;
+            cursor: default;
         }
 
-        .win98-content center {
-            margin: 0; /* Remove extra margin from the <center> tag */
+        .desktop-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(1200px 700px at 15% 10%, rgba(16, 132, 208, 0.55), transparent 60%),
+                radial-gradient(1000px 700px at 85% 90%, rgba(255, 0, 128, 0.4), transparent 60%),
+                radial-gradient(900px 600px at 80% 15%, rgba(0, 255, 170, 0.35), transparent 60%),
+                #000010;
+            background-size: 200% 200%;
+            animation: voiddrift 40s ease-in-out infinite;
         }
 
-        .win98-content img, 
-        .win98-content h3, 
-        .win98-content p, 
-        .win98-content .pixel-font {
-            margin: 3px 0; /* Reduce margins for child elements */
+        @keyframes voiddrift {
+            0%, 100% { background-position: 0% 0%, 100% 100%, 80% 15%; }
+            50%      { background-position: 30% 40%, 70% 60%, 40% 80%; }
         }
 
-        .pixel-font {
-            font-family: 'Press Start 2P', monospace; /* Ensure the correct font is applied */
-            font-size: 12px; /* Adjust size if needed */
-            line-height: 1.3; /* Optional: Adjust line height for better spacing */
+        .desktop-video {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.35;
+            filter: saturate(0.8);
+        }
+
+        .wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px;
         }
 
         .myspace-container {
-            width: 980px;
-            margin: 0 auto;
             display: grid;
-            grid-template-columns: 200px 1fr 200px;
-            gap: 15px;
+            grid-template-columns: 230px 1fr 230px;
+            gap: 16px;
+            align-items: start;
         }
-        .media-player {
-            background: #f0f0f0;
-            color: #333;
-            border: 3px solid #ccc;
-            font-family: "Courier New", monospace;
-            padding: 10px;
-            margin: 15px 0;
+
+        .col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+        .win98-window {
+            background: var(--win-face);
+            border: 3px solid;
+            border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            padding: 3px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
         }
-        .player-controls {
+
+        .win98-titlebar {
+            background: linear-gradient(to right, var(--titlebar-a), var(--titlebar-b));
+            color: #fff;
+            padding: 4px 6px;
+            font-weight: bold;
+            font-size: 12px;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .win98-buttons { display: flex; gap: 2px; }
+
+        .win98-button {
+            width: 16px;
+            height: 14px;
+            background: var(--win-face);
+            border: 2px solid;
+            border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            padding: 0;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
-        .player-button {
-            background: #fff;
-            color: #333;
-            border: 2px solid #ccc;
-            padding: 5px 10px;
+            color: #000;
             cursor: pointer;
+            font-family: inherit;
         }
-        .marquee {
-            background: #000;
-            color: #0f0;
-            padding: 5px;
-            font-family: "Courier New", monospace;
+        .win98-button svg { display: block; pointer-events: none; }
+        .win98-button:active {
+            border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+            background: #d6d3ce;
         }
+
+        .win98-content {
+            background: #fff;
+            border: 1px solid var(--win-dark);
+            padding: 10px;
+            color: #000;
+        }
+
+        .win98-content p { margin: 6px 0; }
+
+        .retro-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: var(--win-face);
+            border: 2px solid;
+            border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            box-shadow: 1px 1px 0 var(--win-dark);
+            color: #000;
+            text-decoration: none;
+            padding: 8px 10px;
+            font-weight: bold;
+            font-family: inherit;
+        }
+        .retro-link:hover { background: #d5d5d5; }
+        .retro-link:active {
+            border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+            box-shadow: inset 1px 1px 0 var(--win-dark);
+        }
+
+        .pixel-font {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
         .glitter {
             background-image: linear-gradient(45deg, #ff0000, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
             background-size: 400% 400%;
-            color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
+            color: transparent;
             font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             animation: sparkle 3s linear infinite;
         }
+
         @keyframes sparkle {
             0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            50%      { background-position: 100% 50%; }
         }
-        ::-webkit-scrollbar {
-            width: 16px;
+
+        .profile-pic {
+            width: 150px;
+            max-width: 100%;
+            border: 0;
+            margin: 3px auto;
+            display: block;
         }
-        ::-webkit-scrollbar-track {
-            background: #c0c0c0;
-            border: 3px solid #dfdfdf;
+
+        .banner-box { display: block; margin: 8px auto; text-align: center; }
+        .banner-box img { width: 85%; max-width: 130px; display: inline-block; }
+
+        .webcam-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #808080;
-            border: 3px solid #dfdfdf;
+        .webcam-grid img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 2px solid var(--titlebar-a);
+            background: #000;
+        }
+
+        .media-player { font-family: "JetBrains Mono", monospace; font-size: 12px; }
+
+        .now-playing {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: #000;
+            color: #0f0;
+            padding: 4px 6px;
+            margin: 6px 0;
+        }
+
+        .player-controls { display: flex; justify-content: center; gap: 10px; margin: 8px 0 4px; }
+
+        .player-button {
+            background: var(--win-face);
+            border: 2px solid;
+            border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+            color: #000;
+            font-size: 16px;
+            padding: 6px 18px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .player-button:active {
+            border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+        }
+
+        .player-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+        .player-row label { flex: 0 0 auto; font-size: 11px; }
+        .player-row input[type="range"] { flex: 1; min-width: 0; }
+
+        .marquee {
+            background: #000;
+            color: #0f0;
+            padding: 6px;
+            font-family: "JetBrains Mono", monospace;
+            overflow: hidden;
+        }
+
+        .status-embed {
+            border: none;
+            width: 100%;
+            height: 375px;
+            display: block;
+            color-scheme: light dark;
+        }
+
+        .comments-list {
+            height: 190px;
+            overflow-y: auto;
+            padding: 6px;
+            background: #fff;
+            border: 1px solid var(--win-dark);
+            font-size: 12px;
+        }
+        .comment { margin-bottom: 10px; }
+        .comment-footer { color: #666; font-size: 11px; }
+
+        .comment-box { width: 100%; height: 56px; margin-top: 10px; padding: 4px; font-family: inherit; font-size: 12px; resize: vertical; }
+        .post-button { width: 100%; padding: 6px; margin-top: 5px; font-size: 12px; }
+
+        .post-note { display: none; text-align: center; font-size: 11px; color: #060; margin-top: 4px; }
+
+        .footer {
+            padding: 18px 16px 30px;
+            text-align: center;
+            font-size: 11px;
+            color: #ddd;
+            text-shadow: 1px 1px 1px #000;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .footer a { color: #cfe8ff; }
+
+        .kenny {
+            position: fixed;
+            width: 100px;
+            height: 112px;
+            z-index: 999;
+            pointer-events: none;
+            image-rendering: pixelated;
+        }
+
+        .scrollbar-area::-webkit-scrollbar { width: 16px; }
+        .scrollbar-area::-webkit-scrollbar-track { background: var(--win-face); border-left: 1px solid var(--win-light); }
+        .scrollbar-area::-webkit-scrollbar-thumb {
+            background: var(--win-dark);
+            border: 3px solid;
+            border-color: var(--win-light) var(--win-darker) var(--win-darker) var(--win-light);
+        }
+
+        @media (max-width: 920px) {
+            .myspace-container { grid-template-columns: 1fr; }
+            .webcam-grid { grid-template-columns: 1fr; }
+            .status-embed { height: 325px; }
+        }
+
+        @media (max-width: 480px) {
+            .wrapper { padding: 10px; }
+            .webcam-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <video autoplay muted loop style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <div class="desktop-bg"></div>
+    <video class="desktop-video" autoplay muted loop playsinline>
         <source src="https://fuck.your-homi.es/GSN5rddSRg.mp4?key=6XzVvgwAQfgh43" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
 
-    <!-- Main Container -->
-    <div class="myspace-container">
-        <!-- Left Column -->
-        <div>
-            <!-- Profile Window -->
-            <div class="win98-window">
-                <div class="win98-titlebar">
-                    <span>Profile</span>
-                    <div class="win98-buttons">
-                        <div class="win98-button">_</div>
-                        <div class="win98-button">□</div>
-                        <div class="win98-button">X</div>
+    <div class="wrapper">
+        <div class="myspace-container">
+            <div class="col">
+                <div class="win98-window">
+                    <div class="win98-titlebar">
+                        <span>Profile</span>
+                        <div class="win98-buttons">
+                            <button class="win98-button" type="button" title="Minimize"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                            <button class="win98-button" type="button" title="Maximize"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                            <button class="win98-button" type="button" title="Close"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
+                        </div>
                     </div>
-                </div>
-                <div class="win98-content">
-                    <center>
-                        <img src="https://cdn.loli.rodeo/bzJpLTR99D.png?key=gdKwkM3R9AxYf4" width="150" style="border: 3px solid #000080;">
-                        <h3 class="glitter">NIHIL</h3>
-                        <a href="https://loli.rodeo" target="_blank">
-                            <img src="lrbanner.svg" alt="Banner" style="margin: 5px 0; width: 60%;">
+                    <div class="win98-content" style="text-align:center;">
+                        <img src="https://loli.rodeo/files/f0924268-c45d-4dc4-af9f-741bc3f2593e" alt="NIHIL" class="profile-pic">
+                        <h2 class="glitter pixel-font" style="margin:10px 0 4px; text-align:center; font-size:24px;">NIHIL</h2>
+                        <a class="banner-box" href="https://loli.rodeo" target="_blank" rel="noopener">
+                            <img src="lrbanner.svg" alt="Loli.rodeo banner">
                         </a>
-                        <p>"The all-consuming Patriarch of Oblivion!"</p>
-                        <div class="pixel-font">LVL 2147483647</div>
-                        <img src="https://cdn.loli.rodeo/2JFJ7xpJxz.gif?key=9Y8qyXG5sP7pSC" width="150">
-                    </center>
-                </div>
-            </div>
-            
-            <!-- Music Player Window -->
-            <div class="win98-window">
-                <div class="win98-titlebar">
-                    <span>Media Player</span>
-                    <div class="win98-buttons">
-                        <div class="win98-button">_</div>
-                        <div class="win98-button">□</div>
-                        <div class="win98-button">X</div>
+                        <p style="font-weight:bold;">"The all-consuming Patriarch of Oblivion!"</p>
+                        <div class="pixel-font" style="color:#048eff; font-size:18px; font-weight:bold;">LVL 2147483647</div>
                     </div>
                 </div>
-                <div class="win98-content">
-                    <div class="media-player light-theme">
+
+                <div class="win98-window">
+                    <div class="win98-titlebar">
+                        <span>Media Player</span>
+                        <div class="win98-buttons">
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
+                        </div>
+                    </div>
+                    <div class="win98-content media-player">
                         <div>Now Playing:</div>
-                        <div id="now-playing">Gangsta's Paradise - Mona Megistus</div>
+                        <div class="now-playing">
+                            <marquee behavior="scroll" direction="left" id="now-playing">Gangsta's Paradise - Mona Megistus</marquee>
+                        </div>
                         <div class="player-controls">
-                            <button class="player-button">⏵</button> <!-- Play icon -->
+                            <button class="player-button" id="play-toggle" type="button">&#9654;</button>
                         </div>
-                        <label for="timeline" style="display: block; margin-top: 10px;">Seek:</label>
-                        <input id="timeline" type="range" min="0" max="100" value="0" step="1" style="width: 100%; margin: 5px 0;">
-                        <label for="volume-bar" style="display: block; margin-top: 10px;">Volume:</label>
-                        <input id="volume-bar" type="range" min="0" max="100" value="20" step="1" style="width: 70%; margin: 5px 0;"> <!-- 30% smaller -->
-                        <audio id="player" src="https://fuck.your-homi.es/96mvMwE8Vo.mp3?key=K6SEeI7dM0w6li" autoplay loop></audio>
+                        <div class="player-row">
+                            <label for="timeline">Seek</label>
+                            <input id="timeline" type="range" min="0" max="100" value="0" step="1">
+                        </div>
+                        <div class="player-row">
+                            <label for="volume-bar">Vol</label>
+                            <input id="volume-bar" type="range" min="0" max="100" value="20" step="1">
+                        </div>
+                        <div style="text-align:right; font-size:11px; margin-top:4px;" id="time-label">0:00 / 0:00</div>
+                        <audio id="player" src="https://fuck.your-homi.es/96mvMwE8Vo.mp3?key=K6SEeI7dM0w6li" preload="auto" loop></audio>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Middle Column -->
-        <div>
-            <!-- Status Window -->
-            <div class="win98-window">
-                <div class="win98-titlebar">
-                    <span>Status Updates</span>
-                    <div class="win98-buttons">
-                        <div class="win98-button">_</div>
-                        <div class="win98-button">□</div>
-                        <div class="win98-button">X</div>
-                    </div>
-                </div>
-                <div class="win98-content">
-                    <iframe src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?header=false&maxHeight=500" data-misskey-embed-id="v1_a1cfb05c-6255-4bdf-90f0-0c211e53e585" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="border: none; width: 100%; height: 300px; color-scheme: light dark;"></iframe>
-                    <script defer src="https://loli.rodeo/embed.js"></script>
-                </div>
-            </div>
 
-            <!-- Marquee Window -->
-            <div class="win98-window">
-                <div class="win98-titlebar">
-                    <span>Current Mood</span>
-                    <div class="win98-buttons">
-                        <div class="win98-button">_</div>
-                        <div class="win98-button">□</div>
-                        <div class="win98-button">X</div>
+                <div class="win98-window">
+                    <div class="win98-titlebar">
+                        <span>Navigation</span>
+                        <div class="win98-buttons">
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
+                        </div>
                     </div>
-                </div>
-                <div class="win98-content">
-                    <div class="marquee">
-                        <marquee behavior="scroll" direction="left">~*~ Currently feeling: Pogpilled ~*~ Watching: Neon Genesis Evangelion ~*~</marquee>
-                    </div>
-                </div>
-            </div>
-            <div class="win98-window">
-    <div class="win98-titlebar">
-        <span>Navigation</span>
-        <div class="win98-buttons">
-            <div class="win98-button">_</div>
-            <div class="win98-button">□</div>
-            <div class="win98-button">X</div>
-        </div>
-    </div>
-    <div class="win98-content">
-        <a href="SP24-7.html" class="win98-button-link">24/7 South Park</a>
-    </div>
-</div>
-        </div>
-        
-        
-        <!-- Right Column -->
-        <div class="right-column">
-            <!-- GIF Showcase Window -->
-            <div class="win98-window">
-                <div class="win98-titlebar">
-                    <span>Webcam</span>
-                    <div class="win98-buttons">
-                        <div class="win98-button">_</div>
-                        <div class="win98-button">□</div>
-                        <div class="win98-button">X</div>
-                    </div>
-                </div>
-                <div class="win98-content">
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-                        <img src="https://media1.tenor.com/m/wasxrCLXbxQAAAAd/ew-eww.gif" width="340%" style="border: 2px solid #000080;">
+                    <div class="win98-content" style="padding:8px;">
+                        <a href="SP24-7.html" class="retro-link">24/7 South Park</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Comments Window -->
-            <div class="win98-window">
-                <div class="win98-titlebar">
-                    <span>Comments (3)</span>
-                    <div class="win98-buttons">
-                        <div class="win98-button">_</div>
-                        <div class="win98-button">□</div>
-                        <div class="win98-button">X</div>
+            <div class="col">
+                <div class="win98-window">
+                    <div class="win98-titlebar">
+                        <span>Status Updates</span>
+                        <div class="win98-buttons">
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
+                        </div>
+                    </div>
+                    <div class="win98-content" style="padding:0;">
+                        <iframe class="status-embed" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+                            src="https://loli.rodeo/embed/user-timeline/9xtfpsrh6vvv0021?header=false&maxHeight=625"></iframe>
                     </div>
                 </div>
-                <div class="win98-content">
-                    <div style="height: 200px; overflow-y: auto; padding: 5px; background: #fff; border: 1px solid #808080;">
-                        <div style="margin-bottom: 10px;">
-                            <strong>Tom:</strong> CHICKEN JOCKEY!<br>
-                            <small>2 hours ago</small>
-                        </div>
-                        <div style="margin-bottom: 10px;">
-                            <strong>Sarah:</strong> anime pfp lol<br>
-                            <small>Yesterday</small>
-                        </div>
-                        <div style="margin-bottom: 10px;">
-                            <strong>Jess:</strong> uwu<br>
-                            <small>3 days ago</small>
+
+                <div class="win98-window">
+                    <div class="win98-titlebar">
+                        <span>Current Mood</span>
+                        <div class="win98-buttons">
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
                         </div>
                     </div>
-                    <textarea style="width: 100%; height: 60px; margin-top: 10px;" placeholder="Leave a comment..."></textarea>
-                    <button style="width: 100%; padding: 5px; margin-top: 5px;">Post Comment</button>
+                    <div class="win98-content" style="padding:0;">
+                        <div class="marquee">
+                            <marquee behavior="scroll" direction="left">~*~ Currently feeling: Pogpilled ~*~ Watching: Neon Genesis Evangelion ~*~</marquee>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="win98-window">
+                    <div class="win98-titlebar">
+                        <span>Webcam</span>
+                        <div class="win98-buttons">
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
+                        </div>
+                    </div>
+                    <div class="win98-content">
+                        <div class="webcam-grid">
+                            <img src="media/ew.gif" alt="ew">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="win98-window">
+                    <div class="win98-titlebar">
+                        <span>Comments (3)</span>
+                        <div class="win98-buttons">
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0" y="5" width="8" height="2" fill="#2b2b2b"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="0 0 8 7" aria-hidden="true"><rect x="0.8" y="0.8" width="6.4" height="5.4" fill="none" stroke="#2b2b2b" stroke-width="1.6"/></svg></button>
+                            <button class="win98-button" type="button"><svg width="8" height="7" viewBox="-1 -1 10 9" aria-hidden="true"><path d="M0 0 L8 7 M8 0 L0 7" stroke="#2b2b2b" stroke-width="2" fill="none"/></svg></button>
+                        </div>
+                    </div>
+                    <div class="win98-content">
+                        <div class="comments-list scrollbar-area" id="comments-list">
+                            <div class="comment">
+                                <strong>Tom:</strong> CHICKEN JOCKEY!<br>
+                                <span class="comment-footer">2 hours ago</span>
+                            </div>
+                            <div class="comment">
+                                <strong>Sarah:</strong> anime pfp lol<br>
+                                <span class="comment-footer">Yesterday</span>
+                            </div>
+                            <div class="comment">
+                                <strong>Jess:</strong> uwu<br>
+                                <span class="comment-footer">3 days ago</span>
+                            </div>
+                        </div>
+                        <textarea class="comment-box" id="comment-input" placeholder="Leave a comment..."></textarea>
+                        <button class="post-button" id="post-comment" type="button">Post Comment</button>
+                        <div class="post-note" id="post-note">comment posted to nowhere</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div style="margin: 20px auto; width: 980px; text-align: center; font-size: 11px; color: #fff; text-shadow: 1px 1px 1px #000;">
-        <p>© 2002 Jimbo's Crackshack | 
-        <a href="#" style="color: #fff;">Home</a> | 
-        <a href="#" style="color: #fff;">Profile</a> | 
-        <a href="#" style="color: #fff;">Friends</a> | 
-        <a href="#" style="color: #fff;">Inbox</a></p>
+    <div class="footer">
+        <p>&#169; 2002 Jimbo's Crackshack |
+        <a href="index.html">Home</a> |
+        <a href="#profile">Profile</a> |
+        <a href="#">Friends</a> |
+        <a href="#">Inbox</a></p>
         <p>Profile last updated: <span id="last-updated">3/17/2005</span></p>
     </div>
 
-    <script defer>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const player = document.getElementById('player');
-            const playButton = document.querySelector('.player-button');
+            const toggle = document.getElementById('play-toggle');
             const timeline = document.getElementById('timeline');
             const volumeBar = document.getElementById('volume-bar');
+            const timeLabel = document.getElementById('time-label');
+
+            let wasSeeking = false;
+
+            const fmt = (s) => {
+                if (!isFinite(s)) s = 0;
+                const m = Math.floor(s / 60);
+                const sec = Math.floor(s % 60);
+                return m + ':' + String(sec).padStart(2, '0');
+            };
+
+            const syncUi = () => {
+                if (!player.paused && !player.ended) {
+                    toggle.textContent = '\u23F8';
+                } else {
+                    toggle.textContent = '\u25B6';
+                }
+                timeLabel.textContent = fmt(player.currentTime) + ' / ' + (player.duration ? fmt(player.duration) : '0:00');
+                if (!wasSeeking) {
+                    timeline.value = (player.duration ? (player.currentTime / player.duration) * 100 : 0);
+                }
+            };
 
             player.volume = 0.2;
 
-            playButton.addEventListener('click', () => {
+            toggle.addEventListener('click', () => {
                 if (player.paused) {
                     player.play();
-                    playButton.textContent = '⏸';
                 } else {
                     player.pause();
-                    playButton.textContent = '⏵';
                 }
+                syncUi();
             });
 
-            player.addEventListener('timeupdate', () => {
-                timeline.value = (player.currentTime / player.duration) * 100 || 0;
-            });
+            player.addEventListener('play', syncUi);
+            player.addEventListener('pause', syncUi);
+            player.addEventListener('timeupdate', syncUi);
+            player.addEventListener('ended', syncUi);
+            player.addEventListener('loadedmetadata', syncUi);
 
             timeline.addEventListener('input', () => {
-                player.currentTime = (timeline.value / 100) * player.duration;
+                wasSeeking = true;
+                if (player.duration) {
+                    player.currentTime = (timeline.value / 100) * player.duration;
+                }
+            });
+            timeline.addEventListener('change', () => {
+                wasSeeking = false;
             });
 
-            volumeBar.addEventListener('input', () => {
-                player.volume = volumeBar.value / 100;
+            const setVolume = (v) => {
+                player.volume = v / 100;
+                volumeBar.value = v;
+            };
+
+            volumeBar.addEventListener('input', () => setVolume(volumeBar.value));
+
+            player.play().catch(() => {
+                toggle.textContent = '\u25B6';
+            });
+
+            const kenny = document.createElement('img');
+            kenny.src = 'media/kenny.gif';
+            kenny.alt = 'Bouncing Kenny';
+            kenny.className = 'kenny';
+            document.body.appendChild(kenny);
+
+            let posX = Math.random() * (window.innerWidth - 120);
+            let posY = Math.random() * (window.innerHeight - 130);
+            let speedX = (Math.random() > 0.5 ? 1 : -1) * 2;
+            let speedY = (Math.random() > 0.5 ? 1 : -1) * 2;
+
+            function animate() {
+                posX += speedX;
+                posY += speedY;
+                if (posX <= 0 || posX >= window.innerWidth - 120) {
+                    speedX *= -1;
+                    speedY += (Math.random() - 0.5) * 0.5;
+                }
+                if (posY <= 0 || posY >= window.innerHeight - 130) {
+                    speedY *= -1;
+                    speedX += (Math.random() - 0.5) * 0.5;
+                }
+                kenny.style.left = posX + 'px';
+                kenny.style.top = posY + 'px';
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                posX = Math.min(posX, window.innerWidth - 120);
+                posY = Math.min(posY, window.innerHeight - 130);
+            });
+
+            const comments = document.getElementById('comments-list');
+            const input = document.getElementById('comment-input');
+            const postBtn = document.getElementById('post-comment');
+            const note = document.getElementById('post-note');
+
+            postBtn.addEventListener('click', () => {
+                const text = input.value.trim();
+                if (text) {
+                    const div = document.createElement('div');
+                    div.className = 'comment';
+                    div.innerHTML = '<strong>You:</strong> ' + text.replace(/[<>&]/g, (c) => (
+                        c === '<' ? '&lt;' : c === '>' ? '&gt;' : '&amp;'
+                    )) + '<br><span class="comment-footer">just now</span>';
+                    comments.prepend(div);
+                    input.value = '';
+                }
+                note.style.display = 'block';
+                setTimeout(() => { note.style.display = 'none'; }, 2500);
             });
         });
     </script>
-    <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Create a single bouncing Kenny
-        const kenny = document.createElement('img');
-        kenny.src = 'https://media.tenor.com/D1x0MXiqQ-4AAAAi/playing-games-kenny-mccormick.gif';
-        kenny.alt = 'Bouncing Kenny';
-        kenny.style.position = 'fixed';
-        kenny.style.zIndex = '1'; // Ensure it is visible above the background
-        kenny.style.pointerEvents = 'none'; // Prevent interaction
-        kenny.style.width = '100px';
-        kenny.style.height = '100px';
-        kenny.style.left = '0px'; // Initialize horizontal position
-        kenny.style.top = '0px'; // Initialize vertical position
-
-        // Initial position and velocity
-        let posX = Math.random() * (window.innerWidth - 100);
-        let posY = Math.random() * (window.innerHeight - 100);
-        let speedX = (Math.random() > 0.5 ? 1 : -1) * 2; // Slower and randomized horizontal speed
-        let speedY = (Math.random() > 0.5 ? 1 : -1) * 2; // Slower and randomized vertical speed
-
-        // Add Kenny to the DOM
-        document.body.appendChild(kenny);
-
-        function animate() {
-            // Update position
-            posX += speedX;
-            posY += speedY;
-
-            // Bounce off walls and randomize direction slightly
-            if (posX <= 0 || posX >= window.innerWidth - 100) {
-                speedX *= -1;
-                speedY += (Math.random() - 0.5) * 0.5; // Add slight randomness to vertical speed
-            }
-            if (posY <= 0 || posY >= window.innerHeight - 100) {
-                speedY *= -1;
-                speedX += (Math.random() - 0.5) * 0.5; // Add slight randomness to horizontal speed
-            }
-
-            // Apply position
-            kenny.style.left = `${posX}px`;
-            kenny.style.top = `${posY}px`;
-
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            posX = Math.min(posX, window.innerWidth - 100);
-            posY = Math.min(posY, window.innerHeight - 100);
-        });
-    });
-</script>
 </body>
 </html>
