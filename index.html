@@ -36,6 +36,24 @@
             cursor: default;
         }
 
+        .desktop-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(1200px 700px at 15% 10%, rgba(16, 132, 208, 0.18), transparent 60%),
+                radial-gradient(1000px 700px at 85% 90%, rgba(255, 0, 128, 0.13), transparent 60%),
+                radial-gradient(900px 600px at 80% 15%, rgba(0, 255, 170, 0.12), transparent 60%),
+                #000010;
+            background-size: 200% 200%;
+            animation: voiddrift 40s ease-in-out infinite;
+        }
+
+        @keyframes voiddrift {
+            0%, 100% { background-position: 0% 0%, 100% 100%, 80% 15%; }
+            50%      { background-position: 30% 40%, 70% 60%, 40% 80%; }
+        }
+
         .desktop-video {
             position: fixed;
             inset: 0;
@@ -43,8 +61,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 1;
-            filter: saturate(1.1) brightness(1.15);
+            opacity: 0.35;
+            filter: saturate(0.8);
         }
 
         .wrapper {
@@ -284,6 +302,7 @@
 </head>
 <body>
 
+    <div class="desktop-bg"></div>
     <video class="desktop-video" autoplay muted loop playsinline>
         <source src="https://fuck.your-homi.es/GSN5rddSRg.mp4?key=6XzVvgwAQfgh43" type="video/mp4">
     </video>
@@ -422,7 +441,7 @@
                                 <span class="comment-footer">1 hour ago</span>
                             </div>
                             <div class="comment">
-                                <strong>IHATETHEANTICHRIST:</strong> anime pfp lol<br>
+                                <strong>IHATETHEANTICHRISTity:</strong> anime pfp lol<br>
                                 <span class="comment-footer">Yesterday</span>
                             </div>
                             <div class="comment">
